@@ -27,13 +27,13 @@
 	
 		
 	<servlet-mapping>
-		<servlet-name>appServerlet</servlet-name>
+		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error.html</location>
+		<location>/error</location>
 	</error-page>
 
 </web-app>
