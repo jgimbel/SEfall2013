@@ -10,6 +10,26 @@
 	Hello world!  
 </h1>
 
+<input id=notes type="text" />
+<script>
+var oldtext = $('#notes').val();
+function save(){
+	while(true){
+	if($('#notes').val() != oldtext){
+		Jquery.Ajax(
+			{
+			URL:/save/notes	
+			content{
+				notes: $('#notes').val();
+			}
+			
+			});
+		oldtext = $('#notes').val();
+	}
+}
+}	
+</script>
+
 <P>  The time on the server is ${serverTime}. </P>
 <a href="login?ID=5,Name='Joel'">Login Here</a>
 </body>
