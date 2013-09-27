@@ -16,14 +16,6 @@ var oldtext = $('#notes').val();
 function save(){
 	while(true){
 	if($('#notes').val() != oldtext){
-		Jquery.Ajax(
-			{
-			URL:/save/notes	
-			content{
-				notes: $('#notes').val();
-			}
-			
-			});
 		oldtext = $('#notes').val();
 	}
 }
