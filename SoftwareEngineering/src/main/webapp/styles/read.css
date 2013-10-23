@@ -1,0 +1,16 @@
+.half {
+	height: 616px;
+	width: 655px;
+}
+
+.fourth {
+	height: 303px;
+	width: 600px;
+	margin-bottom: 10px;
+}
+#bot {}
+#top {}
+#right{
+	float:right;
+	margin-right: 10px;
+}
