@@ -6,23 +6,18 @@
 	<title>Home</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
-
+<a href="login?ID=5,Name='Joel'">Login Here</a>
 <input id=notes type="text" />
 <script>
 var oldtext = $('#notes').val();
 function save(){
 	while(true){
-	if($('#notes').val() != oldtext){
-		oldtext = $('#notes').val();
+		if($('#notes').val() != oldtext){
+			oldtext = $('#notes').val();
+		}
 	}
-}
 }	
 </script>
 
-<P>  The time on the server is ${serverTime}. </P>
-<a href="login?ID=5,Name='Joel'">Login Here</a>
 </body>
 </html>
