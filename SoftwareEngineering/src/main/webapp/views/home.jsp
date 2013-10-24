@@ -6,6 +6,7 @@
 	<title>Home</title>
 </head>
 <body>
+<h2>${serverTime}</h2>
 <a href="login?ID=5,Name='Joel'">Login Here</a>
 <input id=notes type="text" />
 <script>

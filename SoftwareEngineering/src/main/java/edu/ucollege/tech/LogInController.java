@@ -20,7 +20,7 @@ public class LogInController {
 		logger.info("Welcome to login! " + ID);
 		
 		
-		return "redirect:/start";
+		return "redirect:/login";
 		
 	}
 	
