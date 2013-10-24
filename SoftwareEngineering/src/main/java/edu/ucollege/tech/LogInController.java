@@ -1,9 +1,5 @@
 package edu.ucollege.tech;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Handles requests for the application home page.
+ * Handles requests for the application login page.
  */
 @Controller
 public class LogInController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LogInController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/login/{ID}", method = RequestMethod.GET)
-	public String login(Locale locale, Model model, @PathVariable long ID) {
+	public String login(Model model, @PathVariable long ID) {
 		logger.info("Welcome to login! " + ID);
 		
 		
