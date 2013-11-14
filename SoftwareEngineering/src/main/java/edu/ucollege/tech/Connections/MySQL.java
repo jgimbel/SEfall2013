@@ -1,11 +1,6 @@
 package edu.ucollege.tech.Connections;
 import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import com.mysql.jdbc.Driver;
+
 
 public class MySQL {
 	Connection con = null;
@@ -15,26 +10,18 @@ public class MySQL {
     String url = "jdbc:mysql://localhost:3306/test";
     String user = "root";
     String password = "loot";
-	String driver = "com.mysql.jbcd.Driver";
-	public MySQL(){
-		
-		try {
-			Class.forName(driver);
-            con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
+	String driver = "com.mysql.jdbc.Driver";
 
-        } catch (Exception ex) {
-           ex.printStackTrace();
-        } 
-	}
+	public MySQL(){	}
 	
 	public String getArticles(){
 		String toReturn = "";
 		try {
-			//Class.forName(driver);
+			Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(url, user, password);
-			Statement sts = con.createStatement();
-			sts.execute("SELECT * FROM test.article");
+			st = con.createStatement();
+			st.execute("SELECT * FROM test.article");
+			rs = st.getResultSet();
 	            while (rs.next()) {
 	                toReturn += rs.getInt(1);
 	                toReturn += ": ";
@@ -42,8 +29,25 @@ public class MySQL {
 	            }
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.toString());
+		}  finally {
+
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+
+            } catch (SQLException ex) {
+               ex.printStackTrace();
+            }
+        }
 		
 		return toReturn;
 	}
