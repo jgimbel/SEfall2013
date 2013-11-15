@@ -8,12 +8,13 @@ import edu.ucollege.tech.Connections.MySQL;
 @Controller
 public class ReadController {
 	MySQL database = new MySQL();
+	
 	@RequestMapping(value = "/Read")
 	public String Read(){
 		return "Read";
 	}
 	@RequestMapping(value = "/Read/Articles")
-	public String Articles(){
-		return database.getArticles();
+	public String Articles(@RequestParam int ClassID){
+		return database.getArticles(ClassID);
 	}
 }

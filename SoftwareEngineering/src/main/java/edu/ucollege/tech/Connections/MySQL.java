@@ -1,54 +1,126 @@
 package edu.ucollege.tech.Connections;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import edu.ucollege.tech.OM.Person;
 
-public class MySQL {
-	Connection con = null;
-    Statement st = null;
-    ResultSet rs = null;
+import javax.sql.DataSource;
 
-    String url = "jdbc:mysql://localhost:3306/test";
-    String user = "root";
-    String password = "loot";
-	String driver = "com.mysql.jdbc.Driver";
-
-	public MySQL(){	}
+public class MySQL{
+	private DataSource dataSource;
+ 
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 	
-	public String getArticles(){
-		String toReturn = "";
+	public Person login(String name, String password){
+		String sql = String.format("Select * FROM students Where FirstName= '%s' AND Password = '%s'", name, password);
+		ResultSet result = this.Select(sql);
+		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, user, password);
-			st = con.createStatement();
-			st.execute("SELECT * FROM test.article");
-			rs = st.getResultSet();
-	            while (rs.next()) {
-	                toReturn += rs.getInt(1);
-	                toReturn += ": ";
-	                toReturn += rs.getString(2) + "\n";
-	            }
+			result.first();
+			if(result.isLast()){
+			return new Person(result.getInt(1), result.getString(2), result.getString(3), true);
+			}else {
+				sql = "Select * FROM teachers Where FirstName= '%s' AND password = '%s'";
+				result = this.Select(sql);
+				result.first();
+				if(result.isLast()){
+					return new Person(result.getInt(1), result.getString(2), result.getString(3), false);	
+				}else {
+					return null;
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.toString());
-		}  finally {
-
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (st != null) {
-                    st.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-
-            } catch (SQLException ex) {
-               ex.printStackTrace();
-            }
-        }
+		}
+		return null;
 		
-		return toReturn;
 	}
+
+	public Person getStudent(int ID){
+		String sql = "SELECT * FROM students WHERE ID = " + ID;
+		ResultSet rs = this.Select(sql);
+		try{
+			rs.first();
+			if(rs.isLast()){
+				return new Person(rs.getInt(1), rs.getString(2), rs.getString(3), true);
+			}
+		}catch(Exception e){}
+		
+		return null;
+		
+	}
+	public Person getTeacher(int ID){
+		String sql = "SELECT * FROM teachers WHERE ID = " + ID;
+		ResultSet rs = this.Select(sql);
+		try{
+			rs.first();
+			if(rs.isLast()){
+				return new Person(rs.getInt(1), rs.getString(2), rs.getString(3), false);
+			}
+		}catch(Exception e){}
+		
+		return null;
+		
+	}
+	
+	public ResultSet Select(String sql){
+		ResultSet rs = null;
+		
+		Connection conn = null;
+ 
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return rs;
+	}
+ 
+//	public Articles findByCustomerId(int ArtID){
+// 
+//		String sql = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
+// 
+//		Connection conn = null;
+// 
+//		try {
+//			conn = dataSource.getConnection();
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			ps.setInt(1, ArtId);
+//			Customer customer = null;
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//				customer = new Customer(
+//					rs.getInt("CUST_ID"),
+//					rs.getString("NAME"), 
+//					rs.getInt("Age")
+//				);
+//			}
+//			rs.close();
+//			ps.close();
+//			return customer;
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		} finally {
+//			if (conn != null) {
+//				try {
+//				conn.close();
+//				} catch (SQLException e) {}
+//			}
+//		}
+//	}
 }
