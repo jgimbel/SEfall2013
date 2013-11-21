@@ -1,5 +1,7 @@
 package edu.ucollege.tech.OM;
 
+import javax.sql.DataSource;
+
 import edu.ucollege.tech.Connections.MySQL;
 
 public class Person {
@@ -8,6 +10,8 @@ public class Person {
 	public String LastName;
 	private boolean Student;
 	private MySQL sql = new MySQL();
+	
+	
 	public Person(){}
 	public Person(int ID, String FirstName, String LastName, boolean Student){
 		this.ID = ID;
@@ -22,6 +26,7 @@ public class Person {
 			this.clone(sql.getTeacher(ID));
 		}
 	}
+
 	
 	private void clone(Person p){
 		this.ID = p.getID();

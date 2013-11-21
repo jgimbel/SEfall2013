@@ -1,22 +1,27 @@
 package edu.ucollege.tech.Connections;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import edu.ucollege.tech.OM.Person;
 
-import javax.sql.DataSource;
-
 public class MySQL{
-	private DataSource dataSource;
- 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+	private String url = "jdbc:mysql://localhost:3306/test";
+	private String name = "root";
+	private String password = "loot";
+	public MySQL(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Person login(String name, String password){
-		String sql = String.format("Select * FROM students Where FirstName= '%s' AND Password = '%s'", name, password);
+		String sql = String.format("Select * FROM students Where FirstName='%s' AND Password='%s'", name, password);
+//		String sql = "Select * FROM students";
 		ResultSet result = this.Select(sql);
 		
 		try {
@@ -35,6 +40,8 @@ public class MySQL{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e){
+			return null;
 		}
 		return null;
 		
@@ -73,9 +80,10 @@ public class MySQL{
 		Connection conn = null;
  
 		try {
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
+			conn = DriverManager.getConnection(url, name, password);
+			Statement ps = conn.createStatement();
+			ps.execute(sql);
+			rs = ps.getResultSet();
 			ps.close();
  
 		} catch (SQLException e) {
