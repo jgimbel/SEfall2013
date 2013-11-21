@@ -28,7 +28,7 @@ public class Person {
 	}
 
 	
-	private void clone(Person p){
+	public void clone(Person p){
 		this.ID = p.getID();
 		this.FirstName = p.FirstName;
 		this.LastName = p.LastName;
