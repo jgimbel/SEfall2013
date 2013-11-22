@@ -19,17 +19,16 @@ public class MySQL{
 		}
 	}
 	
-	public Person login(String name, String password){
-		String sql = String.format("Select * FROM students Where FirstName='%s' AND Password='%s'", name, password);
+	public Person login(String name, String password) throws Exception{
+		String sql = String.format("Select * FROM students Where Email='%s' AND Password='%s'", name, password);
 //		String sql = "Select * FROM students";
 		ResultSet result = this.Select(sql);
 		
 		try {
-			result.first();
-			if(result.isLast()){
-			return new Person(result.getInt(1), result.getString(2), result.getString(3), true);
+			if(!result.next()){
+				return new Person(result.getInt(1), result.getString(2), result.getString(3), true);
 			}else {
-				sql = "Select * FROM teachers Where FirstName= '%s' AND password = '%s'";
+				sql = "Select * FROM teachers Where Email= '%s' AND password = '%s'";
 				result = this.Select(sql);
 				result.first();
 				if(result.isLast()){
@@ -38,19 +37,19 @@ public class MySQL{
 					return null;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} catch (NullPointerException e){
-			return null;
+			throw new Exception("No User Found");
+		} catch (Exception e) {
+			throw new Exception(e.toString());
 		}
-		return null;
 		
 	}
 
 	public Person getStudent(int ID){
 		String sql = "SELECT * FROM students WHERE ID = " + ID;
-		ResultSet rs = this.Select(sql);
+
 		try{
+			ResultSet rs = this.Select(sql);
 			rs.first();
 			if(rs.isLast()){
 				return new Person(rs.getInt(1), rs.getString(2), rs.getString(3), true);
@@ -62,19 +61,17 @@ public class MySQL{
 	}
 	public Person getTeacher(int ID){
 		String sql = "SELECT * FROM teachers WHERE ID = " + ID;
-		ResultSet rs = this.Select(sql);
 		try{
+			ResultSet rs = this.Select(sql);
 			rs.first();
 			if(rs.isLast()){
 				return new Person(rs.getInt(1), rs.getString(2), rs.getString(3), false);
 			}
 		}catch(Exception e){}
-		
 		return null;
-		
 	}
 	
-	public ResultSet Select(String sql){
+	public ResultSet Select(String sql) throws Exception{
 		ResultSet rs = null;
 		
 		Connection conn = null;
@@ -82,18 +79,21 @@ public class MySQL{
 		try {
 			conn = DriverManager.getConnection(url, name, password);
 			Statement ps = conn.createStatement();
-			ps.execute(sql);
+			ps.executeQuery(sql);
 			rs = ps.getResultSet();
-			ps.close();
+			System.out.println(rs.getInt(1));
+			//ps.close();
  
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.toString());
  
 		} finally {
 			if (conn != null) {
 				try {
 					conn.close();
-				} catch (SQLException e) {}
+				} catch (SQLException e) {
+					throw new Exception(e.toString());
+				}
 			}
 		}
 		return rs;
