@@ -1,7 +1,4 @@
 package edu.ucollege.tech.OM;
-
-import javax.sql.DataSource;
-
 import edu.ucollege.tech.Connections.MySQL;
 
 public class Person {

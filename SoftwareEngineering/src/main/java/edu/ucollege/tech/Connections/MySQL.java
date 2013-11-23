@@ -21,7 +21,6 @@ public class MySQL{
 	
 	public Person login(String name, String password) throws Exception{
 		String sql = String.format("Select * FROM students Where Email='%s' AND Password='%s'", name, password);
-//		String sql = "Select * FROM students";
 		ResultSet result = this.Select(sql);
 		
 		try {
@@ -81,8 +80,8 @@ public class MySQL{
 			Statement ps = conn.createStatement();
 			ps.executeQuery(sql);
 			rs = ps.getResultSet();
-			System.out.println(rs.getInt(1));
-			//ps.close();
+			String s = rs.getString(2);
+			System.out.println(rs.getInt(1) + s);
  
 		} catch (SQLException e) {
 			throw new Exception(e.toString());
