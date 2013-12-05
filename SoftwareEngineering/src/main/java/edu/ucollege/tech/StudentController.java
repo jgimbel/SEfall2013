@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class StudentController {
 	
 	@RequestMapping(value = "/student", method = RequestMethod.GET)
-	public String student(Model model){
+	public String student(){
 		
 		return "student";
 	}

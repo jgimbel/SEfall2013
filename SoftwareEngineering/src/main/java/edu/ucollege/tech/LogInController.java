@@ -16,7 +16,7 @@ import edu.ucollege.tech.OM.Person;
 public class LogInController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(@RequestParam(value="name") String name, @RequestParam(value="password") String password, Map model) {
+	public String login(@RequestParam(value="name") String name, @RequestParam(value="password") String password) {
 		Person p = new Person();
 		try{
 			p.login(name, password);
@@ -25,10 +25,8 @@ public class LogInController {
 			return "redirect:/";
 		}
 		if(p.isStudent()){
-			model.put("student", p);
 			return "redirect:/student";
 		}else { //they are teacher
-			model.put("teacher", p);
 			return "redirect:/teacher";
 		}
 	}
