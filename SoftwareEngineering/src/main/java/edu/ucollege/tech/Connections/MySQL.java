@@ -11,10 +11,16 @@ public class MySQL{
 	private String url = "jdbc:mysql://localhost:3306/test";
 	private String name = "root";
 	private String password = "loot";
+	private Connection conn;
 	public MySQL(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, name, password);
+			
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -24,13 +30,13 @@ public class MySQL{
 		ResultSet result = this.Select(sql);
 		
 		try {
-			if(!result.next()){
+			if(result.first()){
 				return new Person(result.getInt(1), result.getString(2), result.getString(3), true);
 			}else {
-				sql = "Select * FROM teachers Where Email= '%s' AND password = '%s'";
+				sql = String.format("Select * FROM teacher Where Email='%s' AND Password='%s'", name, password);
 				result = this.Select(sql);
-				result.first();
-				if(result.isLast()){
+				
+				if(result.first()){
 					return new Person(result.getInt(1), result.getString(2), result.getString(3), false);	
 				}else {
 					return null;
@@ -72,28 +78,14 @@ public class MySQL{
 	
 	public ResultSet Select(String sql) throws Exception{
 		ResultSet rs = null;
-		
-		Connection conn = null;
- 
 		try {
-			conn = DriverManager.getConnection(url, name, password);
 			Statement ps = conn.createStatement();
 			ps.executeQuery(sql);
 			rs = ps.getResultSet();
-			String s = rs.getString(2);
-			System.out.println(rs.getInt(1) + s);
  
 		} catch (SQLException e) {
 			throw new Exception(e.toString());
  
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					throw new Exception(e.toString());
-				}
-			}
 		}
 		return rs;
 	}

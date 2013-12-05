@@ -10,21 +10,20 @@ import edu.ucollege.tech.OM.Person;
 @Controller
 public class LogInController {
 	
-	@RequestMapping(value = "/login/request", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(@RequestParam(value="name") String name, @RequestParam(value="password") String password) {
+		Person p = new Person();
 		try{
-			Person p = new Person();
 			p.login(name, password);
 		}catch(Exception e){
 			System.out.println(e.toString());
-			return "redirect:/home";
+			return "redirect:/";
 		}
-		return "redirect:/Read";
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(){
-		return "login";
+		if(p.isStudent()){
+			return "redirect:/student";
+		}else { //they are teacher
+			return "redirect:/teacher";
+		}
 	}
 	
 }

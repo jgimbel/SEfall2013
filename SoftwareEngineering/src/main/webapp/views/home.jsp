@@ -14,8 +14,8 @@
 </div>
 <section class="loginform cf"> 
     <div align="center">
-        <form name="login" action="login/request" method="get" accept-charset="utf-8">  
-        <ul> 
+        <form name="login" action="login" method="get" accept-charset="utf-8">  
+        <ul>
             <li><label for="usermail">Email</label>  
             <input type="email" name="name" placeholder="yourname@email.com" required></li>  
             <li><label for="password">Password</label>  
