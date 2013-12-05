@@ -19,11 +19,17 @@ public class CookieFilter implements Filter {
         Cookie[] cookies = ((HttpServletRequest) req).getCookies();
         if (cookies != null) {
             for (Cookie ck : cookies) {
-                if(ck.getName().toString().equals("lang")){
-                    req.setAttribute("languageCookie", ck.getValue());
-                } else {
-                    req.setAttribute("languageCookie", "en");
-                };
+                if( ck.getName().toString().equals("Role")){
+                	
+                    req.setAttribute("Role", ck.getValue());
+                } else if(ck.getName().toString().equals("AccountID")){
+                	
+                    req.setAttribute("AccountID", ck.getValue());
+            	}else{
+                    req.setAttribute("AccountID", "0");
+                    req.setAttribute("Role", "0");
+                }
+               
             }
             chain.doFilter(req, res);
         }
