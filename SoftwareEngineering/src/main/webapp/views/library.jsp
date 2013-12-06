@@ -10,22 +10,13 @@
 
     <body>
         <div class ="titleWrapper">
-        <h1>Instructor View</h1>
+            <h1>Library</h1>
+            <h3>Select an article</h3>
         </div>
         <nav>
-			<a href="teach.html">Classes</a>
+			<a href="read.html">Writing</a>
 			<a href="library.html">Library</a>
 			<a href="login.html">Logout</a>
 		</nav>
-		
-     <a class="button" href="addStudent.html"><button>Add New Student</button></a>
-        
-        <label>Select a class</label>
-        <select name="classList">
-            <option value="1">Class 1</option>
-            <option value="2">Class 2</option>
-            <option value="3">Class 3</option>
-        </select>
-
     </body>
 </html>
