@@ -15,9 +15,9 @@
         <h3>Add New Student</h3>
         </div>
         <nav>
-			<a href="teach.html">Classes</a>
-			<a href="library.html">Library</a>
-			<a href="login.html">Logout</a>
+			<a href="teach.jsp">Classes</a>
+			<a href="library.jsp">Library</a>
+			<a href="home.jsp">Logout</a>
 		</nav>
         
 <section class="submitForm cf"> 
@@ -33,7 +33,7 @@
                 <input type="email" name="usermail" placeholder="Email" required></li>  
             <li><label for="password">Password</label> 
                 <input type="password" name="password" placeholder="Password" required></li>
-            <li><input type="submit" value="submit"><a href="teach.html">Cancel</a></li>
+            <li><input type="submit" value="submit"><a href="teach.jsp">Cancel</a></li>
         </ul>
     </form>
 </section>
