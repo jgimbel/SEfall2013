@@ -6,19 +6,29 @@
         
         <title>Note Taking App</title>
 		<link href="/tech/styles/main.css" rel="stylesheet" />
+		
+		 <script type="text/javascript" src="../scripts/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript">
+            tinymce.init({
+            selector: "textarea",
+           
+            });
+        </script>
 	</head>
 	<body>
 	  <div class ="titleWrapper">
         <h1>Student Note Taker</h1>
        </div>
 		<nav>
-			<a href=" ">Library</a>
-			<a href=" ">Essay</a>
-			<a href=" ">Logout</a>
+			<a href="library.jsp">Library</a>
+			<a href="Read.jsp">Essay</a>
+			<a href="home.jsp">Logout</a>
 		</nav>
 			<div class="block">
-                <textarea class="notesBox" name="noteBox" placeholder="Start writing here" required></textarea>
-                <textarea class="readBox" name="readBox" placeholder="Start taking notes here!" required></textarea>
-			</div>
+            <textarea class="notesBox" name="noteBox" placeholder="Start writing here" required></textarea>
+        </div>
+        <div class="block">
+            <textarea class="writeBox" name="writeBox" placeholder="Start taking notes here!" required></textarea>
+        </div>
 	</body>
 </html>
