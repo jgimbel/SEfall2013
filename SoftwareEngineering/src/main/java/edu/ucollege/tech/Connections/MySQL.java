@@ -1,49 +1,60 @@
 package edu.ucollege.tech.Connections;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import edu.ucollege.tech.OM.Person;
 
-import javax.sql.DataSource;
-
 public class MySQL{
-	private DataSource dataSource;
- 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+	private String url = "jdbc:mysql://localhost:3306/test";
+	private String name = "root";
+	private String password = "loot";
+	private Connection conn;
+	public MySQL(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, name, password);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public Person login(String name, String password){
-		String sql = String.format("Select * FROM students Where FirstName= '%s' AND Password = '%s'", name, password);
+	public Person login(String name, String password) throws Exception{
+		String sql = String.format("Select * FROM students Where Email='%s' AND Password='%s'", name, password);
 		ResultSet result = this.Select(sql);
 		
 		try {
-			result.first();
-			if(result.isLast()){
-			return new Person(result.getInt(1), result.getString(2), result.getString(3), true);
+			if(result.first()){
+				return new Person(result.getInt(1), result.getString(2), result.getString(3), true);
 			}else {
-				sql = "Select * FROM teachers Where FirstName= '%s' AND password = '%s'";
+				sql = String.format("Select * FROM teacher Where Email='%s' AND Password='%s'", name, password);
 				result = this.Select(sql);
-				result.first();
-				if(result.isLast()){
+				
+				if(result.first()){
 					return new Person(result.getInt(1), result.getString(2), result.getString(3), false);	
 				}else {
 					return null;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (NullPointerException e){
+			throw new Exception("No User Found");
+		} catch (Exception e) {
+			throw new Exception(e.toString());
 		}
-		return null;
 		
 	}
 
 	public Person getStudent(int ID){
 		String sql = "SELECT * FROM students WHERE ID = " + ID;
-		ResultSet rs = this.Select(sql);
+
 		try{
+			ResultSet rs = this.Select(sql);
 			rs.first();
 			if(rs.isLast()){
 				return new Person(rs.getInt(1), rs.getString(2), rs.getString(3), true);
@@ -55,38 +66,26 @@ public class MySQL{
 	}
 	public Person getTeacher(int ID){
 		String sql = "SELECT * FROM teachers WHERE ID = " + ID;
-		ResultSet rs = this.Select(sql);
 		try{
+			ResultSet rs = this.Select(sql);
 			rs.first();
 			if(rs.isLast()){
 				return new Person(rs.getInt(1), rs.getString(2), rs.getString(3), false);
 			}
 		}catch(Exception e){}
-		
 		return null;
-		
 	}
 	
-	public ResultSet Select(String sql){
+	public ResultSet Select(String sql) throws Exception{
 		ResultSet rs = null;
-		
-		Connection conn = null;
- 
 		try {
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			ps.close();
+			Statement ps = conn.createStatement();
+			ps.executeQuery(sql);
+			rs = ps.getResultSet();
  
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.toString());
  
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {}
-			}
 		}
 		return rs;
 	}

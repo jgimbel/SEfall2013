@@ -1,5 +1,4 @@
 package edu.ucollege.tech.OM;
-
 import edu.ucollege.tech.Connections.MySQL;
 
 public class Person {
@@ -8,6 +7,8 @@ public class Person {
 	public String LastName;
 	private boolean Student;
 	private MySQL sql = new MySQL();
+	
+	
 	public Person(){}
 	public Person(int ID, String FirstName, String LastName, boolean Student){
 		this.ID = ID;
@@ -15,19 +16,24 @@ public class Person {
 		this.LastName = LastName;
 		this.Student = Student;
 	}
-	public Person(int ID, boolean student){
+	public Person(int ID, boolean student) throws Exception{
 		if(student){
 			this.clone(sql.getStudent(ID));
 		}else{
 			this.clone(sql.getTeacher(ID));
 		}
 	}
+
 	
-	private void clone(Person p){
-		this.ID = p.getID();
-		this.FirstName = p.FirstName;
-		this.LastName = p.LastName;
-		this.Student = p.Student;
+	public void clone(Person p) throws Exception{
+		if(p == null){
+			throw new Exception("Login Failed");
+		}else{
+			this.ID = p.getID();
+			this.FirstName = p.FirstName;
+			this.LastName = p.LastName;
+			this.Student = p.Student;
+		}
 	}
 	public boolean isStudent(){
 		return Student;
@@ -38,7 +44,7 @@ public class Person {
 	public int getID(){
 		return ID;
 	}
-	public void login(String FirstName, String password){
+	public void login(String FirstName, String password) throws Exception{
 		this.clone(sql.login(FirstName, password));
 
 	}

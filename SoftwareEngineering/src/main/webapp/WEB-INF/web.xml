@@ -13,7 +13,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
@@ -35,5 +35,16 @@
 		<error-code>404</error-code>
 		<location>/error</location>
 	</error-page>
+	<filter>
+    <filter-name>CookieFilter</filter-name>
+    <filter-class>
+    	edu.ucollege.tech.OM.CookieFilter    
+    </filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>CookieFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
 
 </web-app>
