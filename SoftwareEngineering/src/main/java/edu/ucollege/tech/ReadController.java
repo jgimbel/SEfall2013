@@ -2,6 +2,7 @@ package edu.ucollege.tech;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.ucollege.tech.Connections.MySQL;
@@ -14,9 +15,11 @@ public class ReadController {
 	public String Read(){
 		return "Read";
 	}
-	@RequestMapping(value = "/Read/Articles")
-	public String Articles(@RequestParam int ClassID){
+	
+	@RequestMapping(value = "/addArticle", method=RequestMethod.POST)
+	public String Articles(@RequestParam String title, @RequestParam String url){
+		
 		return null;
-		//return database.getArticles(ClassID);
+		
 	}
 }

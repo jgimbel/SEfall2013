@@ -11,8 +11,7 @@ import edu.ucollege.tech.OM.Person;
 /**
  * Handles requests for the application login page.
  */
-@Controller
-@SessionAttributes("personObj") 
+@Controller 
 public class LogInController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -27,12 +26,18 @@ public class LogInController {
 		if(p.isStudent()){
 			response.addCookie(new Cookie("AccountID", "" + p.getID()));
 			response.addCookie(new Cookie("Role", "student"));
-			return "redirect:/student";
+			return "redirect:/library";
 		}else { //they are teacher
 			response.addCookie(new Cookie("AccountID","" + p.getID()));
 			response.addCookie(new Cookie("AccountID", "teacher"));
-			return "redirect:/teacher";
+			return "redirect:/teach";
 		}
+	}
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String login(HttpServletResponse response) {
+		response.addCookie(new Cookie("AccountID", "0"));
+		response.addCookie(new Cookie("Role", "null"));
+		return "redirect:/";
 	}
 	
 }

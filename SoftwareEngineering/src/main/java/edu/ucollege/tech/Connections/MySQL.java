@@ -20,7 +20,6 @@ public class MySQL{
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -66,6 +65,7 @@ public class MySQL{
 	}
 	public Person getTeacher(int ID){
 		String sql = "SELECT * FROM teachers WHERE ID = " + ID;
+		
 		try{
 			ResultSet rs = this.Select(sql);
 			rs.first();
@@ -89,37 +89,77 @@ public class MySQL{
 		}
 		return rs;
 	}
+	public ResultSet Insert(String sql) throws Exception{
+		ResultSet rs = null;
+		try {
+			Statement ps = conn.createStatement();
+			ps.execute(sql);
+			rs = ps.getResultSet();
  
-//	public Articles findByCustomerId(int ArtID){
-// 
-//		String sql = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
-// 
-//		Connection conn = null;
-// 
-//		try {
-//			conn = dataSource.getConnection();
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ps.setInt(1, ArtId);
-//			Customer customer = null;
-//			ResultSet rs = ps.executeQuery();
-//			if (rs.next()) {
-//				customer = new Customer(
-//					rs.getInt("CUST_ID"),
-//					rs.getString("NAME"), 
-//					rs.getInt("Age")
-//				);
-//			}
-//			rs.close();
-//			ps.close();
-//			return customer;
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		} finally {
-//			if (conn != null) {
-//				try {
-//				conn.close();
-//				} catch (SQLException e) {}
-//			}
-//		}
-//	}
+		} catch (SQLException e) {
+			throw new Exception(e.toString());
+ 
+		}
+		return rs;
+	}
+
+	public boolean saveStudent(Person p) {
+		
+		String sql = String.format("INSERT INTO `test`.`students` (`FirstName`, `LastName`, `Email`, `Password`) VALUES ('%s', '%s', '%s', '%s');",p.FirstName, p.LastName, p.Email, p.Password);
+		try {
+			this.Insert(sql);
+			return true;
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		return false;
+		
+		
+		
+	}
+
+	public boolean saveTeacher(Person p) {
+		String sql = String.format("INSERT INTO `test`.`teacher` (`FirstName`, `LastName`, `Email`, `Password`) VALUES ('%s', '%s', '%s', '%s');",p.FirstName, p.LastName, p.Email, p.Password);
+		try {
+			this.Insert(sql);
+			return true;
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		return false;
+	}
+ 
+/*	public Articles findByCustomerId(int ArtID){
+ 
+		String sql = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
+ 
+		Connection conn = null;
+ 
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, ArtId);
+			Customer customer = null;
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				customer = new Customer(
+					rs.getInt("CUST_ID"),
+					rs.getString("NAME"), 
+					rs.getInt("Age")
+				);
+			}
+			rs.close();
+			ps.close();
+			return customer;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+	}
+	*/
 }

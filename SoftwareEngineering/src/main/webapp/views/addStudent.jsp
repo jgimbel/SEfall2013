@@ -15,13 +15,13 @@
         <h3>Add New Student</h3>
         </div>
         <nav>
-			<a href="teach.jsp">Classes</a>
-			<a href="library.jsp">Library</a>
-			<a href="home.jsp">Logout</a>
+			<a href="teach">Classes</a>
+			<a href="library">Library</a>
+			<a href="logout">Logout</a>
 		</nav>
         
 <section class="submitForm cf"> 
-     <form name="addStudent" action="index_submit" method="get" accept-charset="utf-8"> 
+     <form name="addStudent" action="addStudentSubmit" method="POST" accept-charset="utf-8"> 
         <ul>
             <li><label for="name">First Name</label>  
                 <input type="text" name="firstname" placeholder="First Name" required></li>  
@@ -33,7 +33,7 @@
                 <input type="email" name="usermail" placeholder="Email" required></li>  
             <li><label for="password">Password</label> 
                 <input type="password" name="password" placeholder="Password" required></li>
-            <li><input type="submit" value="submit"><a href="teach.jsp">Cancel</a></li>
+            <li><input type="submit" value="submit"><a href="teach">Cancel</a></li>
         </ul>
     </form>
 </section>

@@ -5,6 +5,8 @@ public class Person {
 	private int ID;
 	public String FirstName;
 	public String LastName;
+	public String Email;
+	public String Password;
 	private boolean Student;
 	private MySQL sql = new MySQL();
 	
@@ -16,6 +18,7 @@ public class Person {
 		this.LastName = LastName;
 		this.Student = Student;
 	}
+	
 	public Person(int ID, boolean student) throws Exception{
 		if(student){
 			this.clone(sql.getStudent(ID));
@@ -24,6 +27,14 @@ public class Person {
 		}
 	}
 
+	public boolean Save(){
+		
+		if(Student){
+			return sql.saveStudent(this);
+		}else {
+			return sql.saveTeacher(this);
+		}
+	}
 	
 	public void clone(Person p) throws Exception{
 		if(p == null){

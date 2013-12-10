@@ -33,23 +33,18 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		String cookie = request.getAttribute("AccountID").toString();
-		if(cookie=="0"){
-			Date date = new Date();
-			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-			
-			String formattedDate = dateFormat.format(date);
-			
-			model.addAttribute("serverTime", formattedDate );
-			
-			return "home";
-		} else {
+		if(!cookie.equals("0")){
 			String role = request.getAttribute("Role").toString();
 		 	if(role=="student"){
 				return "redirect:/student";
 			}else{
 				return "redirect:/teacher";
 			}
-			
+		} else {
+
+			model.addAttribute("serverTime", "0" );
+			return "home";
+		 	
 		}
 	}
 	

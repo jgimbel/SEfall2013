@@ -13,12 +13,12 @@
         <h1>Instructor View</h1>
         </div>
         <nav>
-			<a href="teach.jsp">Classes</a>
-			<a href="library.jsp">Library</a>
-			<a href="home.jsp">Logout</a>
+			<a href="teach">Classes</a>
+			<a href="library">Library</a>
+			<a href="logout">Logout</a>
 		</nav>
 		
-     <a class="button" href="addStudent.jsp"><button>Add New Student</button></a>
+     <a class="button" href="addStudent"><button>Add New Student</button></a>
         
         <label>Select a class</label>
         <select name="classList">

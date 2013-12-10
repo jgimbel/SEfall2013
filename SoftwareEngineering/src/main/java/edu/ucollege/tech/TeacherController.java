@@ -8,8 +8,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("personObj") 
 public class TeacherController {
 
-	@RequestMapping(value = "/teacher", method = RequestMethod.GET)
+	@RequestMapping(value = "/teach", method = RequestMethod.GET)
 	public String teacher(){
-		return "teacher";
+		return "teach";
+	}
+	
+	@RequestMapping(value = "/addStudent", method = RequestMethod.GET)
+	public String addStudent(){
+		return "addStudent";
 	}
 }

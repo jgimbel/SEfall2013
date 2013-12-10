@@ -1,4 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
+
 <html lang="en">
 	<head>
         <meta charset="utf-8" />
@@ -14,14 +16,14 @@
             <h3>Select an article</h3>
         </div>
         <nav>
-			<a href="Read.jsp">Writing</a>
-			<a href="library.jsp">Library</a>
-			<a href="home.jsp">Logout</a>
+			<a href="Read">Writing</a>
+			<a href="library">Library</a>
+			<a href="logout">Logout</a>
 		</nav>
 		
 		<section class="submitForm cf">
         <h3>Add Article</h3>
-     <form name="addarticle" action="index_submit" method="get" accept-charset="utf-8"> 
+     <form name="addArticle" action="" method="POST" accept-charset="utf-8"> 
         <ul>
             <li><label for="title">Article Title</label>  
                 <input type="text" name="title" placeholder="Place Title here" required></li>  
@@ -35,11 +37,11 @@
         <!-- Variable Explanation -->
         <!-- $articleTitle = The Given title of the Article
              $articleURL = Url to get to articel-->
-        
-        <section id="articleTemplete">
-                <div class="articletitle">$articlTitle</div>
-                <div class="articleURL">$articleURL</div>
-        </section>
-        
+        <c:forTokens items="Times,Subtract,Add,Power" delims="," var="articleTitle">
+	        <section id="articleTemplete">
+	                <div href="${articleURL} " class="articletitle">${articleTitle}</div>
+	                <div class="articleURL"></div>
+	        </section>
+        </c:forTokens>
     </body>
 </html>
