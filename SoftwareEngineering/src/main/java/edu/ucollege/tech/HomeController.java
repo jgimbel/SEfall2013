@@ -38,7 +38,7 @@ public class HomeController {
 		 	if(role=="student"){
 				return "redirect:/student";
 			}else{
-				return "redirect:/teacher";
+				return "redirect:/teach";
 			}
 		} else {
 
