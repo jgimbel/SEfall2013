@@ -39,7 +39,7 @@
              $articleURL = Url to get to articel-->
         <c:forTokens items="Times,Subtract,Add,Power" delims="," var="articleTitle">
 	        <section id="articleTemplete">
-	                <div href="${articleURL} " class="articletitle">${articleTitle}</div>
+	                <div href="${articleURL}" class="articletitle">${articleTitle}</div>
 	                <div class="articleURL"></div>
 	        </section>
         </c:forTokens>

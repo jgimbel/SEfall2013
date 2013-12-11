@@ -3,6 +3,16 @@ import edu.ucollege.tech.Connections.MySQL;
 
 public class Person {
 	private int ID;
+	public String getFirstName() {
+		return FirstName;
+	}
+	public String getLastName() {
+		return LastName;
+	}
+	public String getEmail() {
+		return Email;
+	}
+
 	public String FirstName;
 	public String LastName;
 	public String Email;
@@ -12,10 +22,11 @@ public class Person {
 	
 	
 	public Person(){}
-	public Person(int ID, String FirstName, String LastName, boolean Student){
+	public Person(int ID, String FirstName, String LastName, String Email, boolean Student){
 		this.ID = ID;
 		this.FirstName = FirstName;
 		this.LastName = LastName;
+		this.Email = Email;
 		this.Student = Student;
 	}
 	
@@ -58,5 +69,9 @@ public class Person {
 	public void login(String FirstName, String password) throws Exception{
 		this.clone(sql.login(FirstName, password));
 
+	}
+	
+	public Person[] getStudents(){
+		return sql.getRoster(ID);
 	}
 }

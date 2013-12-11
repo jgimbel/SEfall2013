@@ -29,7 +29,7 @@ public class LogInController {
 			return "redirect:/library";
 		}else { //they are teacher
 			response.addCookie(new Cookie("AccountID","" + p.getID()));
-			response.addCookie(new Cookie("AccountID", "teacher"));
+			response.addCookie(new Cookie("Role", "teacher"));
 			return "redirect:/teach";
 		}
 	}

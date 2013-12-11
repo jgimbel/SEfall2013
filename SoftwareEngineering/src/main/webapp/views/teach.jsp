@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
@@ -33,12 +34,11 @@
              $class = The class the student is in. Should also match the dropdown list above
              $email = Student's Email address 
              $savedWork = A way to access the student's notes and writing may need addtional reasources for this-->
-        <section id="studentTemplate">
-            <div class="name">$fname $lname</div>
-            <div class="class">$class</div>
-            <div class="email">$email</div>
-            <div class="work">$savedWork</div>
-        </section>
-
+	    <c:forEach items="${students}" var="person">
+	        <section id="studentTemplate">
+	            <div class="name">${person.getFirstName()} ${person.getLastName()}</div>
+	            <div class="email">${person.getEmail()}</div>
+	        </section>
+		</c:forEach>
     </body>
 </html>
