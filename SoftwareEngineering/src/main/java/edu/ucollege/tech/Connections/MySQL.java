@@ -91,6 +91,18 @@ public class MySQL{
 		return null;
 	}
 	
+	public boolean saveArticle(Article a){
+		
+		String sql = String.format("INSERT INTO `test`.`students` (`URL`, `Name`, `Date`, `Class_ID`) VALUES ('%s', '%s', '%s', '%s');",a.getURL(), a.getTitle(), a.getDate(), a.getClass());
+		try {
+			this.Insert(sql);
+			return true;
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public boolean saveStudent(Person p) {
 		
 		String sql = String.format("INSERT INTO `test`.`students` (`FirstName`, `LastName`, `Email`, `Password`) VALUES ('%s', '%s', '%s', '%s');",p.FirstName, p.LastName, p.Email, p.Password);
