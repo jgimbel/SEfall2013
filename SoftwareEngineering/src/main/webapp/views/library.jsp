@@ -43,7 +43,7 @@
         
         <c:forEach items="${library}" var="article">
 	        <section id="articleTemplete">
-	                <div  class="articletitle">${article.getTitle()}</div>
+	                <div  class="articletitle"><a href="/tech/Read/${article.getID()}">${article.getTitle()}</a></div>
 	                <div class="articleURL"><a href="${article.getURL()}">${article.getURL()}</a></div>
 	        </section>
         </c:forEach>

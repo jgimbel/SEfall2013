@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import edu.ucollege.tech.OM.Article;
 import edu.ucollege.tech.OM.Person;
+import edu.ucollege.tech.OM.Review;
 public class MySQL{
 	private String url = "jdbc:mysql://localhost:3306/test";
 	private String name = "root";
@@ -260,6 +261,50 @@ public class MySQL{
 			return true;
 		} catch (Exception e) {	
 			e.printStackTrace();
+		}
+		return false;
+	}
+	public Review getReview(int ID) {
+		String sql = "SELECT * FROM review WHERE ID = " + ID;
+		
+		try{
+			ResultSet rs = this.Select(sql);
+			rs.first();
+			if(rs.isLast()){
+				return new Review(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+			}
+		}catch(Exception e){}
+		return null;
+	}
+	public Review getReview(int Student, int Article) {
+		String sql = String.format("SELECT * FROM review WHERE Student_ID=%s AND Article_ID=%s", Student, Article);
+		
+		try{
+			ResultSet rs = this.Select(sql);
+			if(rs.first()){
+				return new Review(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+			}
+		}catch(Exception e){}
+		return null;
+	}
+	public boolean saveReview(Review r) {
+		if(getReview(r.getStudent(), r.getArticle()) == null){
+		
+		String sql = String.format("INSERT INTO `test`.`review` (`Student_ID`, `Article_ID`, `Notes`, `Review`) VALUES ('%s', '%s', %s, %s);",r.getStudent(), r.getArticle(), r.getNotes(), r.getReview());
+		try {
+			this.Insert(sql);
+			return true;
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		}else{
+			String sql = String.format("UPDATE `test`.`review` SET `Notes`=%s, `Review`=%s WHERE `Student_ID`='%s' AND `Article_ID`='%s';", r.getNotes(), r.getReview(), r.getStudent(), r.getArticle());
+			try {
+				this.Insert(sql);
+				return true;
+			} catch (Exception e) {	
+				e.printStackTrace();
+			}
 		}
 		return false;
 	}
