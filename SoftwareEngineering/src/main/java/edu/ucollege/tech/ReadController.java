@@ -19,7 +19,7 @@ public class ReadController {
 	@RequestMapping(value = "/Read/{id}")
 	public String ReadArticle(@PathVariable int id, Model model, ServletRequest request){
 		if(isLoggedIn(request)){
-			Review r = new Review(id);
+			Review r = new Review(Integer.parseInt(request.getAttribute("AccountID").toString()), id);
 			model.addAttribute("review", r);
 			return "Read";
 		} else {
@@ -32,7 +32,7 @@ public class ReadController {
 		if(isLoggedIn(request)){
 			Review r = new Review(Integer.parseInt(request.getAttribute("AccountID").toString()), id, notes, review);
 			r.Save();
-			return "redirect:/Read/"+id;
+			return "It worked perfectly!";
 		} else {
 			return "redirect:/";
 		}

@@ -15,8 +15,7 @@
             });
         </script>
 		<script type="text/javascript">
-			$("#notes").val(${review.getNotes()});
-			$("#review").val(${review.getReview()});
+			
 			
 			function saveText(){
 				$.ajax({
@@ -51,4 +50,10 @@
         </div>
         
 	</body>
+	<script type="text/javascript">
+	$(function() {
+		$('#notes').val('${review.getNotes()}');
+		$('#review').val('${review.getReview()}');
+	});
+		</script>
 </html>
