@@ -20,11 +20,11 @@ public class Article {
 		this.ClassID = ClassID;
 	}
 	
-	public Article(String url, String title){
+	public Article(String url, String title, int ClassID){
 		this.URL = url;
 		this.title = title;
 		this.Date = null;
-		this.ClassID = 0;
+		this.ClassID = ClassID;
 	}
 	
 	public void save(){

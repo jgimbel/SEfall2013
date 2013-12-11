@@ -7,11 +7,10 @@
         <title>Note Taking App</title>
 		<link href="/tech/styles/main.css" rel="stylesheet" />
 		
-		 <script type="text/javascript" src="../scripts/tinymce/tinymce.min.js"></script>
+		 <script type="text/javascript" src="../tech/scripts/tinymce/tinymce.min.js"></script>
         <script type="text/javascript">
             tinymce.init({
-            selector: "textarea",
-           
+            selector: "textarea"         
             });
         </script>
 	</head>

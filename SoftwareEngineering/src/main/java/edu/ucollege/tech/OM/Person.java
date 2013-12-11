@@ -81,4 +81,13 @@ public class Person {
 	public Article[] getLibrary(){	
 		return sql.getArticles(this.ID);
 	}
+
+	public Class[] getClasses(){
+		if(this.Student){
+			//TODO get students classes sometime.
+			return null;
+		} else {
+			return sql.getClasses(ID);
+		}
+	}
 }

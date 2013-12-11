@@ -13,9 +13,9 @@ public class ReadController {
 		return "Read";
 	}
 	@RequestMapping(value = "/Read/article", method = RequestMethod.POST)
-	public String Articles(@RequestParam String title, @RequestParam String url){
+	public String Articles(@RequestParam String title, @RequestParam String url, @RequestParam int Class){
 		
-	new Article(url, title).save();
+	new Article(url, title, Class).save();
 		return "redirect:/library";
 	}
 }

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1">
         
         <title>Note Taking App</title>
-        <link href="../styles/main.css" rel="stylesheet" />
+        <link href="../tech/styles/main.css" rel="stylesheet" />
         </head>
  
     <body>

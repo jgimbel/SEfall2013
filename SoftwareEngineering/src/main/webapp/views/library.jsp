@@ -29,6 +29,13 @@
 		                <input type="text" name="title" placeholder="Place Title here" required></li>  
 		            <li><label for="url">Article URL</label>  
 		                <input type="url" name="url" placeholder="Place URL here" required></li>
+		            <li>
+		            	<select name="class">
+            				<option value="1">Class 1</option>
+            				<option value="2">Class 2</option>
+            				<option value="3">Class 3</option>
+        				</select> 
+       				</li>
 		            <li><input type="submit" value="submit"><a href=" ">Cancel</a></li>
 		        </ul>
 		    </form>

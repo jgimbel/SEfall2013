@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 import edu.ucollege.tech.OM.Article;
 import edu.ucollege.tech.OM.Person;
-
 public class MySQL{
 	private String url = "jdbc:mysql://localhost:3306/test";
 	private String name = "root";
@@ -25,7 +24,6 @@ public class MySQL{
 			e.printStackTrace();
 		}
 	}
-
 	
 	public Person login(String name, String password) throws Exception{
 		String sql = String.format("Select * FROM students Where Email='%s' AND Password='%s'", name, password);
@@ -91,9 +89,21 @@ public class MySQL{
 		return null;
 	}
 	
+	public edu.ucollege.tech.OM.Class getClass(int ID) {
+		String sql = String.format("SELECT * FROM class WHERE class.ID=%s", ID);
+		try{
+			ResultSet rs = this.Select(sql);
+			rs.first();
+			if(rs.isLast()){
+				return new edu.ucollege.tech.OM.Class(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+			}
+		}catch(Exception e){}
+		return null;
+	}
+	
 	public boolean saveArticle(Article a){
 		
-		String sql = String.format("INSERT INTO `test`.`students` (`URL`, `Name`, `Date`, `Class_ID`) VALUES ('%s', '%s', '%s', '%s');",a.getURL(), a.getTitle(), a.getDate(), a.getClass());
+		String sql = String.format("INSERT INTO `test`.`students` (`URL`, `Name`, `Date`, `Class_ID`) VALUES ('%s', '%s', '%s', '%s');",a.getURL(), a.getTitle(), "NOW()", a.getClass());
 		try {
 			this.Insert(sql);
 			return true;
@@ -156,6 +166,35 @@ public class MySQL{
 		return toReturn;
 	}
 
+	public edu.ucollege.tech.OM.Class[] getClasses(int ID) {
+String sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
+		
+		ResultSet rs = null;
+		try {
+			rs = this.Select(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		LinkedList<edu.ucollege.tech.OM.Class> classes = new LinkedList<edu.ucollege.tech.OM.Class>(); 
+		try {
+			while(rs.next()){
+				classes.add(new edu.ucollege.tech.OM.Class(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		edu.ucollege.tech.OM.Class[] toReturn = new edu.ucollege.tech.OM.Class[classes.size()];
+		int x = 0;
+		for(edu.ucollege.tech.OM.Class p : classes){
+			toReturn[x] = p;
+			x++;
+		}
+		
+		return toReturn;
+	
+	}
+	
 	public Article[] getArticles(int ID){
 		String sql =String.format("SELECT article.* FROM test.article, test.class WHERE %s=class.Teacher_ID AND class.ID=article.Class_ID;", ID);
 		
@@ -210,6 +249,11 @@ public class MySQL{
 		}
 		return rs;
 	}
+
+
+
+
+
 
 	
 }
