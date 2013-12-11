@@ -20,7 +20,16 @@ public class Article {
 		this.ClassID = ClassID;
 	}
 	
+	public Article(String url, String title){
+		this.URL = url;
+		this.title = title;
+		this.Date = null;
+		this.ClassID = 0;
+	}
 	
+	public void save(){
+		new MySQL().saveArticle(this);
+	}
 	
 	public void clone(Article a) throws Exception{
 		if(a == null){

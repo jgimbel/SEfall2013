@@ -17,6 +17,7 @@ public class Person {
 	public String LastName;
 	public String Email;
 	public String Password;
+	public Article[] library;
 	private boolean Student;
 	private MySQL sql = new MySQL();
 	
@@ -37,6 +38,8 @@ public class Person {
 			this.clone(sql.getTeacher(ID));
 		}
 	}
+	
+	
 
 	public boolean Save(){
 		
@@ -73,5 +76,9 @@ public class Person {
 	
 	public Person[] getStudents(){
 		return sql.getRoster(ID);
+	}
+	
+	public Article[] getLibrary(){	
+		return sql.getArticles(this.ID);
 	}
 }

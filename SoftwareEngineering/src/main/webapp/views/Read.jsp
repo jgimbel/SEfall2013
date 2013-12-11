@@ -20,9 +20,9 @@
         <h1>Student Note Taker</h1>
        </div>
 		<nav>
-			<a href="library.jsp">Library</a>
-			<a href="Read.jsp">Essay</a>
-			<a href="home.jsp">Logout</a>
+			<a href="library">Library</a>
+			<a href="Read">Essay</a>
+			<a href="logout">Logout</a>
 		</nav>
 			<div class="block">
             <textarea class="notesBox" name="noteBox" placeholder="Start writing here" required></textarea>

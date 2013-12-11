@@ -68,7 +68,7 @@ public class MySQL{
 	}
 	
 	public Article getArticle(int ID){
-		String sql = String.format("SELECT article.* FROM test.article, test.class WHERE %s=class.Teacher_ID AND class.ID=article.Class_ID;", ID);
+		String sql = String.format("SELECT * FROM article WHERE ID=", ID);
 		try{
 			ResultSet rs = this.Select(sql);
 			if(rs.first()){
@@ -156,6 +156,34 @@ public class MySQL{
 		return toReturn;
 	}
 
+	public Article[] getArticles(int ID){
+		String sql =String.format("SELECT article.* FROM test.article, test.class WHERE %s=class.Teacher_ID AND class.ID=article.Class_ID;", ID);
+		
+		ResultSet rs = null;
+		try {
+			rs = this.Select(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		LinkedList<Article> articles = new LinkedList<Article>(); 
+		try {
+			while(rs.next()){
+				articles.add(new Article(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		Article[] toReturn = new Article[articles.size()];
+		int x = 0;
+		for(Article p : articles){
+			toReturn[x] = p;
+			x++;
+		}
+		
+		return toReturn;
+	
+	}
 	private ResultSet Select(String sql) throws Exception{
 		ResultSet rs = null;
 		try {

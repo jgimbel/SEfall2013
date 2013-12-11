@@ -1,17 +1,27 @@
 package edu.ucollege.tech;
 
 import javax.servlet.ServletRequest;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import edu.ucollege.tech.OM.Person;
 @Controller
 @SessionAttributes("personObj") 
 public class StudentController {
 	
 	@RequestMapping(value = "/library", method = RequestMethod.GET)
-	public String student(ServletRequest request){
+	public String student(ServletRequest request, Model model){
 		if(isLoggedIn(request)){
+			int ID = Integer.parseInt(request.getAttribute("AccountID").toString());
+			try {
+				model.addAttribute("library", new Person(ID, false).getLibrary());
+			} catch (Exception e) {
+ 				e.printStackTrace();
+			}
 			return "library";
 		} else {
 			return "redirect:/";
