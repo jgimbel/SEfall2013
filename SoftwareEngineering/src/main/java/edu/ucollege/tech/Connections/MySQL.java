@@ -111,7 +111,7 @@ public class MySQL{
 		String sql = String.format("INSERT INTO `test`.`students` (`FirstName`, `LastName`, `Email`, `Password`) VALUES ('%s', '%s', '%s', '%s');",p.FirstName, p.LastName, p.Email, p.Password);
 		try {
 			this.Insert(sql);
-			ResultSet rs = this.Select(String.format("SELECT ID FROM students WHERE email=%s AND password=%s",p.getEmail(), p.Password));
+			ResultSet rs = this.Select(String.format("SELECT ID FROM students WHERE Email='%s' AND Password='%s'",p.getEmail(), p.Password));
 			if(rs.first()){
 				return rs.getInt(1);
 			}
@@ -163,9 +163,13 @@ public class MySQL{
 		
 		return toReturn;
 	}
-	public edu.ucollege.tech.OM.Class[] getClasses(int ID) {
-		String sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
-		
+	public edu.ucollege.tech.OM.Class[] getClasses(int ID, boolean student) {
+		String sql = null;
+		if(student){
+			sql =String.format("SELECT class.* FROM class, roster WHERE %s=roster.Student_ID AND roster.Class_ID = class.ID;", ID);
+		} else {
+			sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
+		}
 		ResultSet rs = null;
 		try {
 			rs = this.Select(sql);
@@ -191,9 +195,13 @@ public class MySQL{
 		return toReturn;
 	
 	}
-	public Article[] getArticles(int ID){
-		String sql =String.format("SELECT article.* FROM test.article, test.class WHERE %s=class.Teacher_ID AND class.ID=article.Class_ID;", ID);
-		
+	public Article[] getArticles(int ID, boolean student){
+		String sql = null;
+		if(student){
+			sql =String.format("SELECT article.* FROM test.article, test.class, test.roster WHERE roster.Teacher_ID=class.Teacher_ID AND class.ID=article.Class_ID AND roster.Student_ID=%s;", ID);
+		}else {
+			sql =String.format("SELECT article.* FROM test.article, test.class WHERE %s=class.Teacher_ID AND class.ID=article.Class_ID;", ID);
+		}
 		ResultSet rs = null;
 		try {
 			rs = this.Select(sql);
@@ -246,7 +254,7 @@ public class MySQL{
 		return rs;
 	}
 	public boolean addToRoster(int teacher, int student, int c) {
-		String sql = String.format("INSERT INTO `test`.`roster` (`Teacher_ID`, `Student_ID`, `Class_ID`) VALUES ('%s', '%s', '%s', '%s');", teacher, student,c);
+		String sql = String.format("INSERT INTO `test`.`roster` (`Teacher_ID`, `Student_ID`, `Class_ID`) VALUES ('%s', '%s', '%s');", teacher, student,c);
 		try {
 			this.Insert(sql);
 			return true;
@@ -255,5 +263,6 @@ public class MySQL{
 		}
 		return false;
 	}
+
 	
 }

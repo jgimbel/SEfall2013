@@ -38,9 +38,6 @@ public class Person {
 			this.clone(sql.getTeacher(ID));
 		}
 	}
-	
-	
-
 	public Person(String firstName2, String lastName2, String email2, String password2) {
 	
 		this.FirstName = firstName2;
@@ -60,7 +57,6 @@ public class Person {
 			return sql.saveTeacher(this);
 		}
 	}
-	
 	public void clone(Person p) throws Exception{
 		if(p == null){
 			throw new Exception("Login Failed");
@@ -90,15 +86,11 @@ public class Person {
 	}
 	
 	public Article[] getLibrary(){	
-		return sql.getArticles(this.ID);
+		return sql.getArticles(this.ID, Student);
 	}
 
 	public Class[] getClasses(){
-		if(this.Student){
-			//TODO get students classes sometime.
-			return null;
-		} else {
-			return sql.getClasses(ID);
-		}
+			return sql.getClasses(ID, Student);
+
 	}
 }
