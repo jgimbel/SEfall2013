@@ -20,14 +20,16 @@
 		</nav>
 		
      <a class="button" href="addStudent"><button>Add New Student</button></a>
-        
+        <form name="SelectClass" action="teach" method="GET" accept-charset="utf-8">
         <label>Select a class</label>
-        <select name="classList">
-            <option value="1">Class 1</option>
-            <option value="2">Class 2</option>
-            <option value="3">Class 3</option>
-        </select>
-        
+			<select name="class">
+				<option value="0">All</option>
+				<c:forEach items="${classes}" var="item">
+					<option value="${item.getID()}">${item.getName()}</option>
+				</c:forEach>
+			</select> 
+			<input type="submit" value="Select" />
+        </form>
          <!-- Variable Explanation -->
         <!-- $fname = Studnet's First Name
              $lname = Student's Last Name

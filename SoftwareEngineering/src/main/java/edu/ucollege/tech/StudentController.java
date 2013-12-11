@@ -18,7 +18,10 @@ public class StudentController {
 		if(isLoggedIn(request)){
 			int ID = Integer.parseInt(request.getAttribute("AccountID").toString());
 			try {
-				model.addAttribute("library", new Person(ID, false).getLibrary());
+				Person p = new Person(ID, false);
+				model.addAttribute("library", p.getLibrary());
+				model.addAttribute("classes", p.getClasses());
+				
 			} catch (Exception e) {
  				e.printStackTrace();
 			}

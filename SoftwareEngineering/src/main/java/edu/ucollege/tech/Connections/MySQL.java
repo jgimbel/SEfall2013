@@ -24,7 +24,6 @@ public class MySQL{
 			e.printStackTrace();
 		}
 	}
-	
 	public Person login(String name, String password) throws Exception{
 		String sql = String.format("Select * FROM students Where Email='%s' AND Password='%s'", name, password);
 		ResultSet result = this.Select(sql);
@@ -49,7 +48,6 @@ public class MySQL{
 		}
 		
 	}
-
 	public Person getStudent(int ID){
 		String sql = "SELECT * FROM students WHERE ID = " + ID;
 
@@ -64,7 +62,6 @@ public class MySQL{
 		return null;
 		
 	}
-	
 	public Article getArticle(int ID){
 		String sql = String.format("SELECT * FROM article WHERE ID=", ID);
 		try{
@@ -75,7 +72,6 @@ public class MySQL{
 		}catch(Exception e){}
 		return null;
 	}
-	
 	public Person getTeacher(int ID){
 		String sql = "SELECT * FROM teacher WHERE ID = " + ID;
 		
@@ -88,7 +84,6 @@ public class MySQL{
 		}catch(Exception e){}
 		return null;
 	}
-	
 	public edu.ucollege.tech.OM.Class getClass(int ID) {
 		String sql = String.format("SELECT * FROM class WHERE class.ID=%s", ID);
 		try{
@@ -100,7 +95,6 @@ public class MySQL{
 		}catch(Exception e){}
 		return null;
 	}
-	
 	public boolean saveArticle(Article a){
 		
 		String sql = String.format("INSERT INTO `test`.`students` (`URL`, `Name`, `Date`, `Class_ID`) VALUES ('%s', '%s', '%s', '%s');",a.getURL(), a.getTitle(), "NOW()", a.getClass());
@@ -112,22 +106,21 @@ public class MySQL{
 		}
 		return false;
 	}
-	
-	public boolean saveStudent(Person p) {
+	public int saveStudent(Person p) {
 		
 		String sql = String.format("INSERT INTO `test`.`students` (`FirstName`, `LastName`, `Email`, `Password`) VALUES ('%s', '%s', '%s', '%s');",p.FirstName, p.LastName, p.Email, p.Password);
 		try {
 			this.Insert(sql);
-			return true;
+			ResultSet rs = this.Select(String.format("SELECT ID FROM students WHERE email=%s AND password=%s",p.getEmail(), p.Password));
+			if(rs.first()){
+				return rs.getInt(1);
+			}
 		} catch (Exception e) {	
 			e.printStackTrace();
 		}
-		return false;
-		
-		
+		return 0;
 		
 	}
-
 	public boolean saveTeacher(Person p) {
 		String sql = String.format("INSERT INTO `test`.`teacher` (`FirstName`, `LastName`, `Email`, `Password`) VALUES ('%s', '%s', '%s', '%s');",p.FirstName, p.LastName, p.Email, p.Password);
 		try {
@@ -138,9 +131,14 @@ public class MySQL{
 		}
 		return false;
 	}
-
-	public Person[] getRoster(int ID) {
-		String sql = String.format("SELECT students.* FROM students, roster Where students.ID=roster.Student_ID AND roster.Teacher_ID=%s;",ID);
+	public Person[] getRoster(int ID, int c) {
+		String sql = null;
+		if(c==0){
+			sql = String.format("SELECT students.* FROM students, roster Where students.ID=roster.Student_ID AND roster.Teacher_ID=%s;",ID);
+		} else {
+			sql = String.format("SELECT students.* FROM students, roster Where students.ID=roster.Student_ID AND roster.Teacher_ID=%s AND roster.Class_ID=%s;",ID, c);
+		}
+		
 		ResultSet rs = null;
 		try {
 			rs = this.Select(sql);
@@ -165,9 +163,8 @@ public class MySQL{
 		
 		return toReturn;
 	}
-
 	public edu.ucollege.tech.OM.Class[] getClasses(int ID) {
-String sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
+		String sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
 		
 		ResultSet rs = null;
 		try {
@@ -194,7 +191,6 @@ String sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
 		return toReturn;
 	
 	}
-	
 	public Article[] getArticles(int ID){
 		String sql =String.format("SELECT article.* FROM test.article, test.class WHERE %s=class.Teacher_ID AND class.ID=article.Class_ID;", ID);
 		
@@ -249,11 +245,15 @@ String sql =String.format("SELECT * FROM class WHERE Teacher_ID=%s", ID);
 		}
 		return rs;
 	}
-
-
-
-
-
-
+	public boolean addToRoster(int teacher, int student, int c) {
+		String sql = String.format("INSERT INTO `test`.`roster` (`Teacher_ID`, `Student_ID`, `Class_ID`) VALUES ('%s', '%s', '%s', '%s');", teacher, student,c);
+		try {
+			this.Insert(sql);
+			return true;
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 }

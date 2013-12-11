@@ -41,10 +41,21 @@ public class Person {
 	
 	
 
+	public Person(String firstName2, String lastName2, String email2, String password2) {
+	
+		this.FirstName = firstName2;
+		this.LastName = lastName2;
+		this.Email = email2;
+		this.Password = password2;
+		this.Student = true;
+		
+	
+	}
 	public boolean Save(){
 		
 		if(Student){
-			return sql.saveStudent(this);
+			this.ID = sql.saveStudent(this);
+			return true;
 		}else {
 			return sql.saveTeacher(this);
 		}
@@ -74,8 +85,8 @@ public class Person {
 
 	}
 	
-	public Person[] getStudents(){
-		return sql.getRoster(ID);
+	public Person[] getStudents(int c){
+		return sql.getRoster(ID, c);
 	}
 	
 	public Article[] getLibrary(){	

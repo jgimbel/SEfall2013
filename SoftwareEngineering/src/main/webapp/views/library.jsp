@@ -31,9 +31,9 @@
 		                <input type="url" name="url" placeholder="Place URL here" required></li>
 		            <li>
 		            	<select name="class">
-            				<option value="1">Class 1</option>
-            				<option value="2">Class 2</option>
-            				<option value="3">Class 3</option>
+		            		 <c:forEach items="${classes}" var="item">
+            					<option value="${item.getID()}">${item.getName()}</option>
+            					</c:forEach>
         				</select> 
        				</li>
 		            <li><input type="submit" value="submit"><a href=" ">Cancel</a></li>

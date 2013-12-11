@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
 
 <html lang="en">
@@ -27,8 +28,13 @@
                 <input type="text" name="firstname" placeholder="First Name" required></li>  
             <li><label for="name">Last Name</label>  
                 <input type="text" name="lastname" placeholder="Last Name" required></li>  
-            <li><label for="name">Class</label> 
-                <input type="text" name="class" placeholder="Class" required></li>  
+            <li>
+            <select name="class">
+				<c:forEach items="${classes}" var="item">
+					<option value="${item.getID()}">${item.getName()}</option>
+				</c:forEach>
+			</select> 
+            </li>  
             <li><label for="email">Email</label> 
                 <input type="email" name="usermail" placeholder="Email" required></li>  
             <li><label for="password">Password</label> 
