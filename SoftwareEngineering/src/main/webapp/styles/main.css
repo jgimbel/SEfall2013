@@ -138,7 +138,7 @@ input:focus  {
     border: 1px solid rgba(0, 0, 0, 0.3);
 }
  div.name, div.class, div.email, div.work,
-div.articletitle, div.articleURL a{
+div.articletitle a, div.articleURL a{
 	border: none;
     font-size: 25px;
 	color: #999;
